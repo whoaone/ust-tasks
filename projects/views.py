@@ -54,7 +54,7 @@ def managementPage(request):
 	projects = Project.objects.all()
 	total_projects = projects.count()
 
-	tasks = Task.objects.all()
+	tasks = Task.objects.all().order_by("-id")
 	total_tasks = tasks.count()
 
 	open_projects = projects.filter(close_project = False)
