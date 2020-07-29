@@ -1,0 +1,82 @@
+{% extends 'projects/base.html' %}
+{% load humanize %}
+{% block content %}
+
+
+<h5>Open Projects</h5>
+<a class="btn btn-primary btn-sm" href="{% url 'create_project' %}">New Project</a>
+<a class="btn btn-primary btn-sm" href="{% url 'all_projects' %}">View All Projects</a>
+<br /><br />
+<div class="card card-body">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">WO</th>
+				<th scope="col">P-No.</th>
+				<th scope="col">Hours Budgeted</th>
+				<th scope="col">Hours Used</th>
+				<th scope="col">Program Manager</th>
+				<th scope="col">Date Created</th>
+				<th scope="col">Due Date</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for project in open_projects %}
+			<tr>
+				<th scope="row">{{project.work_order}}</th>
+				<td>{{project.proposal_no}}</td>
+				<td>{{project.hours_budgeted|intcomma}}</td>
+				<td>{{project.hours_used}}</td>
+				<td>{{project.program_manager}}</td>
+				<td>{{project.date_created|date:"D d M Y"}}</td>
+				<td>{{project.due_date|date:"D d M Y"}}</td>
+				<td><a class="btn btn-xs btn-outline-primary" href="{% url 'update_project' project.id %}">Edit</a>
+				<a class="btn btn-outline-danger btn-xs" href="{% url 'delete_project' project.id %}">Delete</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+<br />
+<h5>Open Tasks</h5>
+<a class="btn btn-primary btn-sm" href="{% url 'create_task' %}">Create Task</a>
+<a class="btn btn-primary btn-sm" href="{% url 'all_tasks' %}">View All Tasks</a>
+<br />
+<br />
+<div class="card card-body">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>WO</th>
+				<th>Category</th>
+				<th>Assigned To</th>
+				<th>Hours Given</th>
+				<th>Hours Used</th>
+				<th>Date Assigned</th>
+				<th>Due Date</th>
+				<th>Assigned By</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for task in open_tasks %}
+			<tr>
+				<th scope="row">{{task.project}}</th>
+				<td>{{task.get_category_display|truncatechars:20}}</td>
+				<td>{{task.assigned_to}}</td>
+				<td>{{task.hours_given}}</td>
+				<td>{{task.hours_used}}</td>
+				<td>{{task.date_created|date:"D d M Y"}}</td>
+				<td>{{task.due_date|date:"D d M Y"}}</td>
+				<td>{{task.created_by}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+	
+{% endblock content %}
+
+
+
+

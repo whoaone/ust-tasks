@@ -1,0 +1,56 @@
+{% extends 'projects/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<br />
+<h5>All Projects</h5>
+<div class="card card-body">
+	
+	<form method="GET">
+		<div class="search-row">
+			WO: {{ myFilter.form.work_order }}
+			P-No: {{ myFilter.form.proposal_no }}
+			PM: {{ myFilter.form.program_manager }}
+			<button class="btn btn-primary btn-sm"  type="submit">Search</button>
+		</div>
+
+	</form>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">WO</th>
+				<th scope="col">P-No.</th>
+				<th scope="col">Hours Budgeted</th>
+				<th scope="col">Hours Used</th>
+				<th scope="col">Program Manager</th>
+				<th scope="col">Date Created</th>
+				<th scope="col">Due Date</th>
+				<th scope="col">Status</th>
+				<th scope="col">Modify</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for project in projects %}
+			<tr>
+				<th scope="row">{{project.work_order}}</th>
+				<td>{{project.proposal_no}}</td>
+				<td>{{project.hours_budgeted|intcomma}}</td>
+				<td>{{project.hours_used}}</td>
+				<td>{{project.program_manager}}</td>
+				<td>{{project.date_created|date:"D d M Y"}}</td>
+				<td>{{project.due_date|date:"D d M Y"}}</td>
+				{% if project.close_project == False %}
+					<td>Open</td>
+				{% else %}
+					<td>Closed</td>
+				{% endif %}
+				<td><a class="btn btn-xs btn-outline-primary" href="{% url 'update_project' project.id %}">Edit</a>
+				<a class="btn btn-outline-danger btn-xs" href="{% url 'delete_project' project.id %}">Delete</a></td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+{% endblock content %}

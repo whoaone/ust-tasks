@@ -1,0 +1,48 @@
+{% load static %}
+
+<style>
+	.company-name{
+		position: relative;
+		text-align: left;
+		vertical-align: middle;
+		top: 8px;
+		color: white;
+		font-size: 22px;
+	}
+	.motto{
+		color: white;
+		font-size: 12px;
+	}
+	.nav-item{
+		font-size: 16px;
+	}
+
+</style>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+	<div class="container">
+		<a class="navbar-brand" href="#">
+			<img src="{% static 'images/logo-no-text-wht.png' %}"alt="US Technical" width="48px" height="67px">
+		</a>
+		<div class="company-name">
+			U.S. Technical Consultants, Inc. <p class="motto">Aviation Products, Services, Engineering & Certification</p>
+		</div>
+
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="{% url 'management' %}">Home</a>
+				</li>
+				{% if request.user.groups.all.0.name == "management" %}
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'generate_report' %}">Reports</a>
+				</li>
+				{% endif %}
+				<li class="nav-item active">
+					<a class="nav-link" href="{% url 'logout' %}">Logout</a>
+				</li>
+			</ul>
+		</div>
+	</div> <!-- end .container -->
+</nav><!-- end .navbar -->

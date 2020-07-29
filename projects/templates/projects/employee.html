@@ -1,0 +1,114 @@
+{% extends 'projects/base.html' %}
+{% load humanize %}
+{% block content %}
+
+<h5>My Projects</h5>
+<a class="btn btn-primary btn-sm" href="{% url 'create_task' %}">Assign Task</a><br /><br />
+<div class="card card-body">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">WO</th>
+				<th scope="col">P-No.</th>
+				<th scope="col">Hours Budgeted</th>
+				<th scope="col">Hours Used</th>
+				<th scope="col">Hours Remaining</th>
+				<th scope="col">Due Date</th>
+				<th scope="col">Date Created</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for project in myprojects %}
+			<tr>
+				<th scope="row">{{project.work_order}}</th>
+				<td>{{project.proposal_no}}</td>
+				<td>{{project.hours_budgeted}}</td>
+				<td>{{project.hours_used}}</td>
+				<td>{{project.hours_remaining}}</td>
+				<td>{{project.due_date|date:"D d M Y"}}</td>
+				<td>{{project.date_created|date:"D d M Y"}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+<hr>
+
+<h5>Agenda</h5>
+<a class="btn btn-primary btn-sm" href="{% url 'daily_log' %}">Generate Daily Log</a>
+<br />
+<br />
+<div class="card card-body">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">WO</th>
+				<th scope="col">Category</th>
+				<th scope="col">Description</th>
+				<th scope="col">Hours Given</th>
+				<th scope="col">Hours Remaining</th>
+				<th scope="col">Due Date</th>
+				<th scope="col">Assigned By</th>
+				<th scope="col">Split Hours</th>
+		</thead>
+			</tr>
+		<tbody>
+			{% for task in mytasks %}
+				<tr>
+					<th scope="row">{{task.project}}</th>
+					<td>{{task.get_category_display|truncatechars:20}}</td>
+					<td>{{task.description}}</td>
+					<td>{{task.hours_given}}</td>
+					<td>{{task.hours_remaining}}</td>
+					<td>{{task.due_date|date:"D d M Y"}}</td>
+					<td>{{task.created_by}}</td>
+					<td><a class="btn btn-xs btn-outline-primary" href="">Split</a>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+<hr>
+
+<h5>Tasks I've Given</h5>
+
+<button type="button" class="btn btn-primary btn-sm">View Completed Tasks</button>
+<br />
+<br />
+<div class="card card-body">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">WO</th>
+				<th scope="col">Category</th>
+				<th scope="col">Description</th>
+				<th scope="col">Hours Given</th>
+				<th scope="col">Hours Remaining</th>
+				<th scope="col">Due Date</th>
+				<th scope="col">Assigned To</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for task in tasksgiven %}
+		
+		
+			<tr>
+				<th scope="row">{{task.project}}</th>
+				<td>{{task.get_category_display|truncatechars:20}}</td>
+				<td>{{task.description}}</td>
+				<td>{{task.hours_given}}</td>
+				<td>{{task.hours_remaining}}</td>
+				<td>{{task.due_date|date:"D d M Y"}}</td>
+				<td>{{task.assigned_to}}</td>
+				<td><a class="btn btn-xs btn-outline-primary" href="{% url 'update_employee_task' task.id %}">Edit</a>
+				<a class="btn btn-outline-danger btn-xs" href="">Delete</a></td>
+			</tr>
+
+	
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,43 @@
+{% extends 'projects/base.html' %}
+{% load static %}
+{% block content %}
+
+<h5>Daily Log</h5>
+<br />
+<form action="" name="submit_daily_log" method="POST">
+{% csrf_token %}
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th scope="col">Task No.</th>
+			<th scope="col">WO</th>
+			<th scope="col">Category</th>
+			<th scope="col">Description</th>
+			<th scope="col">Hours Given</th>
+			<th scope="col">Hours Used</th>
+			<th scope="col">Mark as Complete</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for task in mytasks %}
+		<tr>
+			<th scope="row">{{ task.id }}</th>
+			<td>{{ task.project }}</td>
+			<td>{{ task.get_category_display|truncatechars:32 }}</td>
+			<td>{{ task.description }}</td>
+			<td>{{ task.hours_given }}</td>
+			<td>{{ form.day_used_hours }}</td>
+			<td>{{ form.completed }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+	<div class="form-group row">
+		<div class="col-sm-10">
+			<input type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to submit your daily log?')"name="submit_daily_log">
+		</div>
+	</div>
+</form>
+
+{% endblock content %}

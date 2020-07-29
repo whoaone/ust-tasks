@@ -1,0 +1,13 @@
+<style>
+	.hello-msg{
+		font-size: 14px;
+		text-align: right;
+		padding-bottom: 0;
+		margin-bottom: -45px;
+	}
+</style>
+
+<p class="hello-msg">
+	Hello, {{ request.user.first_name }}<br />
+	Today is the {% now "jS F Y" %}
+</p>
